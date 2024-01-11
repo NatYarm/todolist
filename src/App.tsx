@@ -62,6 +62,21 @@ function App() {
     });
   };
 
+  const updateTask = (todolistId: string, taskId: string, title: string) => {
+    setTasks({
+      ...tasks,
+      [todolistId]: tasks[todolistId].map(t =>
+        t.id === taskId ? { ...t, title } : t
+      ),
+    });
+  };
+
+  const updateTodolist = (todolistId: string, title: string) => {
+    setTodolists(
+      todolists.map(tl => (tl.id === todolistId ? { ...tl, title } : tl))
+    );
+  };
+
   return (
     <div className="App">
       {todolists.map(el => (
@@ -73,6 +88,8 @@ function App() {
           addTask={addTask}
           removeTask={removeTask}
           changeTaskStatus={changeTaskStatus}
+          updateTask={updateTask}
+          updateTodolist={updateTodolist}
           removeTodolist={removeTodolist}
         />
       ))}

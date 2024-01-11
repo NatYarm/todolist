@@ -20,6 +20,8 @@ type PropsType = {
     taskId: string,
     isDone: boolean
   ) => void;
+  updateTask: (todolistId: string, taskId: string, title: string) => void;
+  updateTodolist: (todolistId: string, title: string) => void;
   removeTodolist: (todolistId: string) => void;
 };
 
@@ -31,6 +33,8 @@ const Todolist = (props: PropsType) => {
     removeTask,
     changeTaskStatus,
     addTask,
+    updateTask,
+    updateTodolist,
     removeTodolist,
   } = props;
 
@@ -48,6 +52,10 @@ const Todolist = (props: PropsType) => {
     removeTodolist(todolistId);
   };
 
+  const updateTodolistHandler = (title: string) => {
+    updateTodolist(todolistId, title);
+  };
+
   let tasksForTodolist = tasks;
 
   if (filter === 'active') {
@@ -61,32 +69,40 @@ const Todolist = (props: PropsType) => {
   return (
     <div className="todoList">
       <h3>
-        <EditableSpan oldTitle={todolistTitle} callback={addTaskHandler} />
+        <EditableSpan
+          oldTitle={todolistTitle}
+          callback={updateTodolistHandler}
+        />
         <button onClick={removeTodolistHandler}>x</button>
       </h3>
       <AddItemForm callback={addTaskHandler} />
 
       {tasksForTodolist.length ? (
         <ul>
-          {tasksForTodolist.map(t => (
-            <li key={t.id} className={t.isDone ? 'task-done' : 'task'}>
-              <input
-                type="checkbox"
-                checked={t.isDone}
-                onChange={e =>
-                  changeTaskStatus(todolistId, t.id, e.currentTarget.checked)
-                }
-              />
-              <EditableSpan oldTitle={t.title} callback={addTaskHandler} />
-              <button
-                onClick={() => {
-                  removeTaskHandler(todolistId, t.id);
-                }}
-              >
-                x
-              </button>
-            </li>
-          ))}
+          {tasksForTodolist.map(t => {
+            const updateTaskHandler = (title: string) => {
+              updateTask(todolistId, t.id, title);
+            };
+            return (
+              <li key={t.id} className={t.isDone ? 'task-done' : 'task'}>
+                <input
+                  type="checkbox"
+                  checked={t.isDone}
+                  onChange={e =>
+                    changeTaskStatus(todolistId, t.id, e.currentTarget.checked)
+                  }
+                />
+                <EditableSpan oldTitle={t.title} callback={updateTaskHandler} />
+                <button
+                  onClick={() => {
+                    removeTaskHandler(todolistId, t.id);
+                  }}
+                >
+                  x
+                </button>
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <span>Tasks list is empty</span>
