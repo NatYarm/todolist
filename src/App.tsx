@@ -44,6 +44,11 @@ function App() {
     });
   };
 
+  const removeTodolist = (todolistId: string) => {
+    setTodolists(todolists.filter(el => el.id !== todolistId));
+    delete tasks[todolistId];
+  };
+
   const changeTaskStatus = (
     todolistId: string,
     taskId: string,
@@ -68,6 +73,7 @@ function App() {
           addTask={addTask}
           removeTask={removeTask}
           changeTaskStatus={changeTaskStatus}
+          removeTodolist={removeTodolist}
         />
       ))}
     </div>
