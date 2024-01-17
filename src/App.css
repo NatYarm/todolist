@@ -1,18 +1,18 @@
-.App {
+/* .App {
   padding: 30px;
   display: flex;
-}
+} */
 
-.App > div {
+/* .App > div {
   margin-right: 50px;
-}
+} */
 
-.todoList {
+/* .todoList {
   border: 1px solid black;
   padding: 20px;
   background-color: blanchedalmond;
   border-radius: 5px;
-}
+} */
 
 .task {
   font-weight: 600;
@@ -38,4 +38,20 @@
 .error-msg {
   color: red;
   font-size: 12px;
+}
+
+.formWrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.emptyList {
+  display: block;
+  padding: 10px 0 10px;
 }
