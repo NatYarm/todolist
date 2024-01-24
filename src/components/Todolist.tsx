@@ -5,6 +5,7 @@ import EditableSpan from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import { Delete } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import Checkbox from './Checkbox';
 
 export type TaskType = {
   id: string;
@@ -59,8 +60,12 @@ const Todolist = (props: PropsType) => {
     updateTodolist(todolistId, title);
   };
 
-  const updateTaskHandler = (id: string, title: string) => {
-    updateTask(todolistId, id, title);
+  const updateTaskHandler = (taskId: string, newTitle: string) => {
+    updateTask(todolistId, taskId, newTitle);
+  };
+
+  const changeTaskStatusHandler = (taskId: string, checked: boolean) => {
+    changeTaskStatus(todolistId, taskId, checked);
   };
 
   let tasksForTodolist = tasks;
@@ -92,16 +97,20 @@ const Todolist = (props: PropsType) => {
           {tasksForTodolist.map(t => {
             return (
               <li key={t.id} className={t.isDone ? 'task-done' : 'task'}>
-                <input
+                <Checkbox
+                  checked={t.isDone}
+                  callback={checked => changeTaskStatusHandler(t.id, checked)}
+                />
+                {/* <input
                   type="checkbox"
                   checked={t.isDone}
                   onChange={e =>
                     changeTaskStatus(todolistId, t.id, e.currentTarget.checked)
                   }
-                />
+                /> */}
                 <EditableSpan
                   oldTitle={t.title}
-                  callback={title => updateTaskHandler(t.id, title)}
+                  callback={newTitle => updateTaskHandler(t.id, newTitle)}
                 />
                 <IconButton
                   aria-label="delete"

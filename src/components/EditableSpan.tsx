@@ -2,7 +2,7 @@ import { useState, KeyboardEvent } from 'react';
 
 type EditableSpanProps = {
   oldTitle: string;
-  callback: (title: string) => void;
+  callback: (newTitle: string) => void;
 };
 
 const EditableSpan = ({ oldTitle, callback }: EditableSpanProps) => {
@@ -13,19 +13,15 @@ const EditableSpan = ({ oldTitle, callback }: EditableSpanProps) => {
     setNewTitle(e.currentTarget.value);
   };
 
-  const addTitle = () => {
-    callback(newTitle);
-  };
-
   const addTitleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      editFoo();
+      activateEdit();
     }
   };
 
-  const editFoo = () => {
+  const activateEdit = () => {
     setEdit(!edit);
-    if (edit) addTitle();
+    if (edit) callback(newTitle);
   };
 
   return edit ? (
@@ -33,11 +29,11 @@ const EditableSpan = ({ oldTitle, callback }: EditableSpanProps) => {
       value={newTitle}
       onChange={onChangeHandler}
       onKeyDown={addTitleOnKeyDown}
-      onBlur={editFoo}
+      onBlur={activateEdit}
       autoFocus
     />
   ) : (
-    <span onDoubleClick={editFoo}>{oldTitle}</span>
+    <span onDoubleClick={activateEdit}>{oldTitle}</span>
   );
 };
 
