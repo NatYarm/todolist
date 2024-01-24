@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent } from 'react';
+import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import { Add } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
@@ -11,7 +11,7 @@ const AddItemForm = ({ callback }: AddItemProps) => {
   const [title, setTitle] = useState('');
   const [inputError, setInputError] = useState(false);
 
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value);
     inputError && setInputError(false);
   };
@@ -47,6 +47,7 @@ const AddItemForm = ({ callback }: AddItemProps) => {
         variant="outlined"
         value={title}
         size="small"
+        autoComplete="off"
         error={!!inputError}
         onKeyDown={addTitleOnKeyDown}
         onChange={onChangeHandler}

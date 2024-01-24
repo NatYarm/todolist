@@ -132,13 +132,12 @@ function App() {
         </Grid>
         <Grid container spacing={3} sx={{ padding: '15px' }}>
           {todolists.map(el => (
-            <Grid item>
+            <Grid item key={el.id}>
               <Paper
                 elevation={3}
                 sx={{ padding: '20px', background: '#edebeb' }}
               >
                 <Todolist
-                  key={el.id}
                   todolistId={el.id}
                   todolistTitle={el.title}
                   tasks={tasks[el.id]}
