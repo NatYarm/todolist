@@ -1,56 +1,41 @@
-import { useState } from 'react';
-import { FilterValuesType } from '../App';
-import AddItemForm from './AddItemForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRootState } from '../store/store';
 import EditableSpan from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import { Delete } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import Checkbox from './Checkbox';
+import { FilterValuesType } from '../AppWithRedux';
+import {
+  addTaskAC,
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  removeTaskAC,
+} from '../reducers/tasksReducer';
+import { useState } from 'react';
+import AddItemForm from './AddItemForm';
 
+type PropsType = {
+  todolistId: string;
+  todolistTitle: string;
+  changeTodolistTitle: (todolistId: string, title: string) => void;
+  removeTodolist: (todolistId: string) => void;
+};
 export type TaskType = {
   id: string;
   title: string;
   isDone: boolean;
 };
 
-type PropsType = {
-  todolistTitle: string;
-  todolistId: string;
-  tasks: Array<TaskType>;
-  addTask: (todolistId: string, title: string) => void;
-  removeTask: (todolistId: string, taskId: string) => void;
-  changeTaskStatus: (
-    todolistId: string,
-    taskId: string,
-    isDone: boolean
-  ) => void;
-  changeTaskTitle: (todolistId: string, taskId: string, title: string) => void;
-  changeTodolistTitle: (todolistId: string, title: string) => void;
-  removeTodolist: (todolistId: string) => void;
-};
-
-const Todolist = (props: PropsType) => {
-  const {
-    tasks,
-    todolistTitle,
-    todolistId,
-    removeTask,
-    changeTaskStatus,
-    addTask,
-    changeTaskTitle,
-    changeTodolistTitle,
-    removeTodolist,
-  } = props;
-
+const TodolistWithRedux = (props: PropsType) => {
+  const { todolistId, todolistTitle, changeTodolistTitle, removeTodolist } =
+    props;
   const [filter, setFilter] = useState<FilterValuesType>('all');
 
-  const addTaskHandler = (title: string) => {
-    addTask(todolistId, title);
-  };
-
-  const removeTaskHandler = (todolistId: string, taskId: string) => {
-    removeTask(todolistId, taskId);
-  };
+  const dispatch = useDispatch();
+  const tasks = useSelector<AppRootState, TaskType[]>(
+    state => state.tasks[todolistId]
+  );
 
   const removeTodolistHandler = () => {
     removeTodolist(todolistId);
@@ -58,14 +43,6 @@ const Todolist = (props: PropsType) => {
 
   const changeTodolistTitleHandler = (title: string) => {
     changeTodolistTitle(todolistId, title);
-  };
-
-  const changeTaskTitleHandler = (taskId: string, newTitle: string) => {
-    changeTaskTitle(todolistId, taskId, newTitle);
-  };
-
-  const changeTaskStatusHandler = (taskId: string, checked: boolean) => {
-    changeTaskStatus(todolistId, taskId, checked);
   };
 
   let tasksForTodolist = tasks;
@@ -89,7 +66,9 @@ const Todolist = (props: PropsType) => {
           <Delete />
         </IconButton>
       </h3>
-      <AddItemForm callback={addTaskHandler} />
+      <AddItemForm
+        callback={() => dispatch(addTaskAC(todolistId, todolistTitle))}
+      />
 
       {tasksForTodolist?.length ? (
         <ul>
@@ -98,18 +77,22 @@ const Todolist = (props: PropsType) => {
               <li key={t.id} className={t.isDone ? 'task-done' : 'task'}>
                 <Checkbox
                   checked={t.isDone}
-                  callback={checked => changeTaskStatusHandler(t.id, checked)}
+                  callback={checked =>
+                    dispatch(changeTaskStatusAC(todolistId, t.id, checked))
+                  }
                 />
 
                 <EditableSpan
                   oldTitle={t.title}
-                  callback={newTitle => changeTaskTitleHandler(t.id, newTitle)}
+                  callback={newTitle =>
+                    dispatch(changeTaskTitleAC(todolistId, t.id, newTitle))
+                  }
                 />
                 <IconButton
                   aria-label="delete"
                   size="small"
                   onClick={() => {
-                    removeTaskHandler(todolistId, t.id);
+                    dispatch(removeTaskAC(todolistId, t.id));
                   }}
                 >
                   <Delete fontSize="small" />
@@ -155,4 +138,4 @@ const Todolist = (props: PropsType) => {
   );
 };
 
-export default Todolist;
+export default TodolistWithRedux;

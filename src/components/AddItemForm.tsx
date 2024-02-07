@@ -29,6 +29,8 @@ const AddItemForm = ({ callback }: AddItemProps) => {
   const addTitleOnKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && title) {
       addTitleHandler();
+    } else {
+      setInputError(true);
     }
   };
 
@@ -43,7 +45,6 @@ const AddItemForm = ({ callback }: AddItemProps) => {
     <div className="formWrapper">
       <TextField
         label={inputError ? 'Title is required' : 'type smth...'}
-        id="outlined-basic"
         variant="outlined"
         value={title}
         size="small"

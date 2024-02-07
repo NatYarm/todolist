@@ -5,7 +5,6 @@ export const taskReducer = (
   state: TasksStateType,
   action: TaskReducer
 ): TasksStateType => {
-  //const { todolistId, taskId, title } = action;
   switch (action.type) {
     case 'REMOVE_TASK': {
       return {
