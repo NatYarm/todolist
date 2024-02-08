@@ -44,7 +44,7 @@ const AddItemForm = ({ callback }: AddItemProps) => {
   return (
     <div className="formWrapper">
       <TextField
-        label={inputError ? 'Title is required' : 'type smth...'}
+        label={inputError ? 'Title is required' : 'enter title...'}
         variant="outlined"
         value={title}
         size="small"
@@ -54,12 +54,6 @@ const AddItemForm = ({ callback }: AddItemProps) => {
         onChange={onChangeHandler}
         sx={{ background: '#fff' }}
       />
-      {/* <input
-        value={title}
-        onChange={onChangeHandler}
-        onKeyDown={addTitleOnKeyDown}
-        className={inputError ? 'input-error' : ''}
-      /> */}
 
       <Button
         variant="contained"
@@ -69,7 +63,6 @@ const AddItemForm = ({ callback }: AddItemProps) => {
       >
         <Add />
       </Button>
-      {/* {inputError && <p className="error-msg">Title is required</p>} */}
     </div>
   );
 };

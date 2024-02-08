@@ -7,9 +7,20 @@ const rootReducer = combineReducers({
   tasks: tasksReducer,
 });
 
-export type AppRootState = ReturnType<typeof rootReducer>;
-
 export const store = legacy_createStore(rootReducer);
+
+export type AppRootState = ReturnType<typeof rootReducer>;
 
 //@ts-ignore
 window.store = store;
+
+//this is store object:
+// {
+//   state: {
+//     tasks: {},
+//     todolists: []
+//   }
+//   getState()
+//   dispatch()
+//   subscribe()
+// }

@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { Reducer, useReducer } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import Todolist, { TaskType } from './components/Todolist';
@@ -17,6 +17,7 @@ import {
   addTodolistAC,
   todolistsReducer,
   changeTodolistTitleAC,
+  TodolistReducerActionsType,
 } from './reducers/todolistsReducer';
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
@@ -31,11 +32,13 @@ export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 
-function AppWithReducers() {
+function AppWithReducer() {
   const todolistId1 = v1();
   const todolistId2 = v1();
 
-  const [todolists, dispatchTodolists] = useReducer(todolistsReducer, [
+  const [todolists, dispatchTodolists] = useReducer<
+    Reducer<Array<TodolistType>, TodolistReducerActionsType> //types description is not necessary here
+  >(todolistsReducer, [
     { id: todolistId1, title: 'What to learn', filter: 'all' },
     { id: todolistId2, title: 'What to buy', filter: 'all' },
   ]);
@@ -131,4 +134,4 @@ function AppWithReducers() {
   );
 }
 
-export default AppWithReducers;
+export default AppWithReducer;

@@ -4,11 +4,7 @@ import { Container, Grid, Paper } from '@mui/material';
 import AddItemForm from './components/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar';
 
-import {
-  removeTodolistAC,
-  addTodolistAC,
-  changeTodolistTitleAC,
-} from './reducers/todolistsReducer';
+import { addTodolistAC } from './reducers/todolistsReducer';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { AppRootState } from './store/store';
@@ -23,7 +19,7 @@ export type TodolistType = {
 };
 
 export type TasksStateType = {
-  [key: string]: Array<TaskType>;
+  [key: string]: TaskType[];
 };
 
 function AppWithRedux() {
@@ -32,26 +28,12 @@ function AppWithRedux() {
     state => state.todolists
   );
 
-  const removeTodolist = (todolistId: string) => {
-    const action = removeTodolistAC(todolistId);
-    dispatch(action);
-    dispatch(action);
-  };
-
-  const addTodolist = (title: string) => {
-    dispatch(addTodolistAC(title));
-  };
-
-  const changeTodolistTitle = (todolistId: string, title: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, title));
-  };
-
   return (
     <div className="App">
       <ButtonAppBar />
       <Container fixed>
         <Grid container sx={{ padding: '15px' }}>
-          <AddItemForm callback={addTodolist} />
+          <AddItemForm callback={title => dispatch(addTodolistAC(title))} />
         </Grid>
         <Grid container spacing={3} sx={{ padding: '15px' }}>
           {todolists.map(el => (
@@ -63,8 +45,6 @@ function AppWithRedux() {
                 <TodolistWithRedux
                   todolistId={el.id}
                   todolistTitle={el.title}
-                  changeTodolistTitle={changeTodolistTitle}
-                  removeTodolist={removeTodolist}
                 />
               </Paper>
             </Grid>

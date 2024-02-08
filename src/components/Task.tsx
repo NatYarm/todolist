@@ -1,63 +1,60 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { Delete } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import EditableSpan from './EditableSpan';
-import { Delete } from '@mui/icons-material';
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from './Checkbox';
+import { AppRootState } from '../store/store';
+import {
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  removeTaskAC,
+} from '../reducers/tasksReducer';
+import { TaskType } from './TodolistWithRedux';
 
-type TaskType = {
-  todolistId: string;
+type TaskPropsType = {
   taskId: string;
+  todolistId: string;
 };
 
-const Task = () => {
-  // function changeTaskStatusHandler(id: any, checked: any) {
-  //   throw new Error('Function not implemented.');
-  // }
-  // const addTaskHandler = (title: string) => {
-  //   addTask(todolistId, title);
-  // };
-  // const removeTaskHandler = (todolistId: string, taskId: string) => {
-  //   removeTask(todolistId, taskId);
-  // };
-  // const removeTodolistHandler = () => {
-  //   removeTodolist(todolistId);
-  // };
-  // const updateTodolistHandler = (title: string) => {
-  //   updateTodolistTitle(todolistId, title);
-  // };
-  // const updateTaskHandler = (taskId: string, newTitle: string) => {
-  //   updateTaskTitle(todolistId, taskId, newTitle);
-  // };
-  // const changeTaskStatusHandler = (taskId: string, checked: boolean) => {
-  //   changeTaskStatus(todolistId, taskId, checked);
-  // };
-  // return (
-  //   <li key={t.id} className={t.isDone ? 'task-done' : 'task'}>
-  //     <Checkbox
-  //       checked={t.isDone}
-  //       callback={checked => changeTaskStatusHandler(t.id, checked)}
-  //     />
-  //     {/* <input
-  // 		type="checkbox"
-  // 		checked={t.isDone}
-  // 		onChange={e =>
-  // 			changeTaskStatus(todolistId, t.id, e.currentTarget.checked)
-  // 		}
-  // 	/> */}
-  //     <EditableSpan
-  //       oldTitle={t.title}
-  //       callback={newTitle => updateTaskHandler(t.id, newTitle)}
-  //     />
-  //     <IconButton
-  //       aria-label="delete"
-  //       size="small"
-  //       onClick={() => {
-  //         removeTaskHandler(todolistId, t.id);
-  //       }}
-  //     >
-  //       <Delete fontSize="small" />
-  //     </IconButton>
-  //   </li>
-  // );
+const Task = (props: TaskPropsType) => {
+  const { taskId, todolistId } = props;
+  const dispatch = useDispatch();
+  const task = useSelector<AppRootState, TaskType | undefined>(state =>
+    state.tasks[todolistId].find(t => t.id === taskId)
+  );
+
+  if (!task) {
+    return <p>No task is found</p>;
+  }
+
+  const { title, isDone } = task;
+
+  return (
+    <li className={isDone ? 'task-done' : 'task'}>
+      <Checkbox
+        checked={isDone}
+        callback={checked =>
+          dispatch(changeTaskStatusAC(todolistId, taskId, checked))
+        }
+      />
+
+      <EditableSpan
+        oldTitle={title}
+        callback={newTitle =>
+          dispatch(changeTaskTitleAC(todolistId, taskId, newTitle))
+        }
+      />
+      <IconButton
+        aria-label="delete"
+        size="small"
+        onClick={() => {
+          dispatch(removeTaskAC(todolistId, taskId));
+        }}
+      >
+        <Delete fontSize="small" />
+      </IconButton>
+    </li>
+  );
 };
 
 export default Task;

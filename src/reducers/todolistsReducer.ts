@@ -9,7 +9,7 @@ const initialState: TodolistType[] = [
   { id: todolistId2, title: 'What to buy', filter: 'all' },
 ];
 
-type TodolistReducerActionsType =
+export type TodolistReducerActionsType =
   | RemoveTodolistActionType
   | AddTodolistActionType
   | ChangeTodolistTitleActionType
