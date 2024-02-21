@@ -38,3 +38,21 @@ const EditableSpan = ({ oldTitle, callback }: EditableSpanProps) => {
 };
 
 export default EditableSpan;
+
+const Input = () => {
+  const text = 'hello';
+  return (
+    <div>
+      <SomeComponent text={text} />
+      <h1>{}</h1>
+    </div>
+  );
+};
+
+const SomeComponent = (props: any) => {
+  const onClickHandler = () => {
+    return 'Hollywar';
+  };
+
+  return <div onClick={onClickHandler}>{props.text}</div>;
+};

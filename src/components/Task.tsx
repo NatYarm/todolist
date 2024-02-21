@@ -1,56 +1,50 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Delete } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import EditableSpan from './EditableSpan';
 import Checkbox from './Checkbox';
-import { AppRootState } from '../store/store';
+
 import {
+  TaskType,
   changeTaskStatusAC,
   changeTaskTitleAC,
   removeTaskAC,
 } from '../reducers/tasksReducer';
-import { TaskType } from './TodolistWithRedux';
 
 type TaskPropsType = {
-  taskId: string;
+  task: TaskType;
   todolistId: string;
 };
 
 const Task = (props: TaskPropsType) => {
-  const { taskId, todolistId } = props;
+  const { task, todolistId } = props;
+  const { id: taskId, title, isDone } = task;
   const dispatch = useDispatch();
-  const task = useSelector<AppRootState, TaskType | undefined>(state =>
-    state.tasks[todolistId].find(t => t.id === taskId)
-  );
 
-  if (!task) {
-    return <p>No task is found</p>;
-  }
+  const removeTask = () => {
+    dispatch(removeTaskAC(todolistId, taskId));
+  };
 
-  const { title, isDone } = task;
+  const changeTaskStatus = (checked: boolean) => {
+    dispatch(changeTaskStatusAC(todolistId, taskId, checked));
+  };
+
+  const changeTaskTitle = (newTitle: string) => {
+    dispatch(changeTaskTitleAC(todolistId, taskId, newTitle));
+  };
 
   return (
     <li className={isDone ? 'task-done' : 'task'}>
       <Checkbox
         checked={isDone}
-        callback={checked =>
-          dispatch(changeTaskStatusAC(todolistId, taskId, checked))
-        }
+        callback={checked => changeTaskStatus(checked)}
       />
 
       <EditableSpan
         oldTitle={title}
-        callback={newTitle =>
-          dispatch(changeTaskTitleAC(todolistId, taskId, newTitle))
-        }
+        callback={newTitle => changeTaskTitle(newTitle)}
       />
-      <IconButton
-        aria-label="delete"
-        size="small"
-        onClick={() => {
-          dispatch(removeTaskAC(todolistId, taskId));
-        }}
-      >
+      <IconButton aria-label="delete" size="small" onClick={removeTask}>
         <Delete fontSize="small" />
       </IconButton>
     </li>

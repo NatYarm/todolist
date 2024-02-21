@@ -1,8 +1,15 @@
 import { v1 } from 'uuid';
-import { FilterValuesType, TodolistType } from '../App';
 
 export const todolistId1 = v1();
 export const todolistId2 = v1();
+
+export type TodolistType = {
+  id: string;
+  title: string;
+  filter: FilterValuesType;
+};
+
+export type FilterValuesType = 'all' | 'completed' | 'active';
 
 const initialState: TodolistType[] = [
   { id: todolistId1, title: 'What to learn', filter: 'all' },
@@ -75,6 +82,7 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => {
     title,
   } as const;
 };
+
 type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>;
 export const changeTodolistFilterAC = (
   todolistId: string,

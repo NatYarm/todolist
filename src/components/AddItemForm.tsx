@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, ChangeEvent } from 'react';
+import { useState, KeyboardEvent, ChangeEvent, memo } from 'react';
 import Button from '@mui/material/Button';
 import { Add } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
@@ -7,9 +7,10 @@ type AddItemProps = {
   callback: (title: string) => void;
 };
 
-const AddItemForm = ({ callback }: AddItemProps) => {
+const AddItemForm = memo(({ callback }: AddItemProps) => {
   const [title, setTitle] = useState('');
   const [inputError, setInputError] = useState(false);
+  console.log('AddItemForm called');
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value);
@@ -27,10 +28,10 @@ const AddItemForm = ({ callback }: AddItemProps) => {
   };
 
   const addTitleOnKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && title) {
+    if (event.key === 'Enter') {
       addTitleHandler();
     } else {
-      setInputError(true);
+      inputError && setInputError(true);
     }
   };
 
@@ -65,6 +66,6 @@ const AddItemForm = ({ callback }: AddItemProps) => {
       </Button>
     </div>
   );
-};
+});
 
 export default AddItemForm;
