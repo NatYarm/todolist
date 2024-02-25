@@ -9,11 +9,11 @@ import { addTodolistAC } from './reducers/todolistsReducer';
 import { todolistsSelector } from './store/selectors';
 import { useCallback } from 'react';
 
-function AppWithRedux() {
+const AppWithRedux = () => {
   const dispatch = useDispatch();
   const todolists = useSelector(todolistsSelector);
 
-  console.log('App called');
+  //console.log('App called');
 
   const addTodolist = useCallback(
     (title: string) => {
@@ -27,7 +27,7 @@ function AppWithRedux() {
       <ButtonAppBar />
       <Container fixed>
         <Grid container sx={{ padding: '15px' }}>
-          <AddItemForm callback={addTodolist} />
+          <AddItemForm addItem={addTodolist} />
         </Grid>
         <Grid container spacing={3} sx={{ padding: '15px' }}>
           {todolists.map(el => (
@@ -44,6 +44,6 @@ function AppWithRedux() {
       </Container>
     </div>
   );
-}
+};
 
 export default AppWithRedux;

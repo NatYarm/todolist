@@ -12,8 +12,8 @@ export type TodolistType = {
 export type FilterValuesType = 'all' | 'completed' | 'active';
 
 const initialState: TodolistType[] = [
-  { id: todolistId1, title: 'What to learn', filter: 'all' },
-  { id: todolistId2, title: 'What to buy', filter: 'all' },
+  // { id: todolistId1, title: 'What to learn', filter: 'all' },
+  // { id: todolistId2, title: 'What to buy', filter: 'all' },
 ];
 
 export type TodolistReducerActionsType =

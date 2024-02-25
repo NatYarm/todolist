@@ -89,7 +89,7 @@ const Todolist = (props: PropsType) => {
           <Delete />
         </IconButton>
       </h3>
-      <AddItemForm callback={addTaskHandler} />
+      <AddItemForm addItem={addTaskHandler} />
 
       {tasksForTodolist?.length ? (
         <ul>

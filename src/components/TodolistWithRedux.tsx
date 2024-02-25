@@ -6,6 +6,7 @@ import { Delete } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import AddItemForm from './AddItemForm';
 import Task from './Task';
+import TaskWithRedux from './TaskWithRedux';
 import {
   changeTodolistTitleAC,
   removeTodolistAC,
@@ -21,7 +22,6 @@ type PropsType = {
 
 const TodolistWithRedux = memo((props: PropsType) => {
   const { id: todolistId, title, filter } = props.todolist;
-  console.log('Todolist called');
 
   const dispatch = useDispatch();
   const tasks = useSelector<AppRootState, TaskType[]>(
@@ -39,9 +39,12 @@ const TodolistWithRedux = memo((props: PropsType) => {
     dispatch(removeTodolistAC(todolistId));
   };
 
-  const changeTodolistTitle = (newTitle: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, newTitle));
-  };
+  const changeTodolistTitle = useCallback(
+    (newTitle: string) => {
+      dispatch(changeTodolistTitleAC(todolistId, newTitle));
+    },
+    [dispatch, todolistId]
+  );
 
   const changeFilterValue = (newFilterValue: FilterValuesType) => {
     dispatch(changeTodolistFilterAC(todolistId, newFilterValue));
@@ -74,12 +77,13 @@ const TodolistWithRedux = memo((props: PropsType) => {
           <Delete />
         </IconButton>
       </h3>
-      <AddItemForm callback={addTask} />
+      <AddItemForm addItem={addTask} />
 
-      {tasksForTodolist?.length ? (
+      {tasksForTodolist.length ? (
         <ul>
           {tasksForTodolist.map(t => (
             <Task key={t.id} task={t} todolistId={todolistId} />
+            // <TaskWithRedux key={t.id} taskId={t.id} todolistId={todolistId} />
           ))}
         </ul>
       ) : (

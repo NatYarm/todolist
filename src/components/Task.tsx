@@ -10,16 +10,18 @@ import {
   changeTaskTitleAC,
   removeTaskAC,
 } from '../reducers/tasksReducer';
+import { memo } from 'react';
 
 type TaskPropsType = {
   task: TaskType;
   todolistId: string;
 };
 
-const Task = (props: TaskPropsType) => {
+const Task = memo((props: TaskPropsType) => {
   const { task, todolistId } = props;
   const { id: taskId, title, isDone } = task;
   const dispatch = useDispatch();
+  console.log('Task');
 
   const removeTask = () => {
     dispatch(removeTaskAC(todolistId, taskId));
@@ -35,20 +37,13 @@ const Task = (props: TaskPropsType) => {
 
   return (
     <li className={isDone ? 'task-done' : 'task'}>
-      <Checkbox
-        checked={isDone}
-        callback={checked => changeTaskStatus(checked)}
-      />
-
-      <EditableSpan
-        oldTitle={title}
-        callback={newTitle => changeTaskTitle(newTitle)}
-      />
+      <Checkbox checked={isDone} callback={changeTaskStatus} />
+      <EditableSpan oldTitle={title} callback={changeTaskTitle} />
       <IconButton aria-label="delete" size="small" onClick={removeTask}>
         <Delete fontSize="small" />
       </IconButton>
     </li>
   );
-};
+});
 
 export default Task;

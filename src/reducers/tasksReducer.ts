@@ -1,10 +1,8 @@
 import { v1 } from 'uuid';
-
 import {
   AddTodolistActionType,
   RemoveTodolistActionType,
 } from './todolistsReducer';
-import { todolistId1, todolistId2 } from './todolistsReducer';
 
 export type TaskType = {
   id: string;
@@ -16,22 +14,7 @@ export type TasksStateType = {
   [key: string]: TaskType[];
 };
 
-const initialState: TasksStateType = {
-  [todolistId1]: [
-    { id: v1(), title: 'HTML&CSS', isDone: true },
-    { id: v1(), title: 'JS', isDone: true },
-    { id: v1(), title: 'ReactJS', isDone: false },
-    { id: v1(), title: 'Rest API', isDone: false },
-    { id: v1(), title: 'GraphQL', isDone: false },
-  ],
-  [todolistId2]: [
-    { id: v1(), title: 'HTML&CSS2', isDone: true },
-    { id: v1(), title: 'JS2', isDone: true },
-    { id: v1(), title: 'ReactJS2', isDone: false },
-    { id: v1(), title: 'Rest API2', isDone: false },
-    { id: v1(), title: 'GraphQL2', isDone: false },
-  ],
-};
+const initialState: TasksStateType = {};
 
 export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
 export type AddTaskActionType = ReturnType<typeof addTaskAC>;
@@ -120,3 +103,18 @@ export const changeTaskTitleAC = (
   taskId: string,
   title: string
 ) => ({ type: 'CHANGE_TASK_TITLE', todolistId, taskId, title } as const);
+
+// [todolistId1]: [
+//   { id: v1(), title: 'HTML&CSS', isDone: true },
+//   { id: v1(), title: 'JS', isDone: true },
+//   { id: v1(), title: 'ReactJS', isDone: false },
+//   { id: v1(), title: 'Rest API', isDone: false },
+//   { id: v1(), title: 'GraphQL', isDone: false },
+// ],
+// [todolistId2]: [
+//   { id: v1(), title: 'HTML&CSS2', isDone: true },
+//   { id: v1(), title: 'JS2', isDone: true },
+//   { id: v1(), title: 'ReactJS2', isDone: false },
+//   { id: v1(), title: 'Rest API2', isDone: false },
+//   { id: v1(), title: 'GraphQL2', isDone: false },
+// ],
