@@ -4,21 +4,34 @@ import {
   removeTodolistAC,
   todolistsReducer,
   changeTodolistTitleAC,
+  FilterValuesType,
+  TodolistEntityType,
 } from '../reducers/todolistsReducer';
 import { v1 } from 'uuid';
-import { FilterValuesType, TodolistType } from '../App';
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: Array<TodolistType>;
+let startState: Array<TodolistEntityType>;
 
 beforeEach(() => {
   todolistId1 = v1();
   todolistId2 = v1();
 
   startState = [
-    { id: todolistId1, title: 'What to learn', filter: 'all' },
-    { id: todolistId2, title: 'What to buy', filter: 'all' },
+    {
+      id: todolistId1,
+      title: 'What to learn',
+      filter: 'all',
+      order: 0,
+      addedDate: new Date(),
+    },
+    {
+      id: todolistId2,
+      title: 'What to buy',
+      filter: 'all',
+      order: 0,
+      addedDate: new Date(),
+    },
   ];
 });
 
@@ -54,15 +67,7 @@ test('correct todolist should change its name', () => {
 });
 
 test('correct todolist should change its filter value', () => {
-  const todolistId1 = v1();
-  const todolistId2 = v1();
-
   const newFilterValue: FilterValuesType = 'completed';
-
-  const startState: TodolistType[] = [
-    { id: todolistId1, title: 'What to learn', filter: 'all' },
-    { id: todolistId2, title: 'What to buy', filter: 'all' },
-  ];
 
   const action = changeTodolistFilterAC(todolistId2, newFilterValue);
 

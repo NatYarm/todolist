@@ -1,38 +1,21 @@
-import { useState, KeyboardEvent, ChangeEvent, memo } from 'react';
+import { memo } from 'react';
 import Button from '@mui/material/Button';
 import { Add } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
+import { useAddItemForm } from './useAddItemForm';
 
 export type AddItemProps = {
   addItem: (title: string) => void;
 };
 
 const AddItemForm = memo(({ addItem }: AddItemProps) => {
-  const [title, setTitle] = useState('');
-  const [inputError, setInputError] = useState(false);
-
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.currentTarget.value);
-    inputError && setInputError(false);
-  };
-
-  const addTitleHandler = () => {
-    const trimmedTask = title.trim();
-    if (trimmedTask) {
-      addItem(title);
-    } else {
-      setInputError(true);
-    }
-    setTitle('');
-  };
-
-  const addTitleOnKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      addTitleHandler();
-    } else {
-      inputError && setInputError(true);
-    }
-  };
+  const {
+    title,
+    inputError,
+    onChangeHandler,
+    addTitleOnKeyDown,
+    addTitleHandler,
+  } = useAddItemForm(addItem);
 
   const styles = {
     maxWidth: '35px',

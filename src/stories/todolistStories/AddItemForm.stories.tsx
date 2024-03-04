@@ -1,5 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import AddItemForm, { AddItemProps } from '../../components/AddItemForm';
+import AddItemForm, {
+  AddItemProps,
+} from '../../components/addItemForm/AddItemForm';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import TextField from '@mui/material/TextField';

@@ -1,26 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { Container, Grid, Paper } from '@mui/material';
-import AddItemForm from './components/AddItemForm';
-import ButtonAppBar from './components/ButtonAppBar';
+import AddItemForm from '../addItemForm/AddItemForm';
+import ButtonAppBar from '../ButtonAppBar';
 import './App.css';
-import TodolistWithRedux from './components/TodolistWithRedux';
-import { addTodolistAC } from './reducers/todolistsReducer';
-import { todolistsSelector } from './store/selectors';
-import { useCallback } from 'react';
+import TodolistWithRedux from '../todolist/TodolistWithRedux';
+import { useAppWithRedux } from './useAppWithRedux';
 
 const AppWithRedux = () => {
-  const dispatch = useDispatch();
-  const todolists = useSelector(todolistsSelector);
-
-  //console.log('App called');
-
-  const addTodolist = useCallback(
-    (title: string) => {
-      dispatch(addTodolistAC(title));
-    },
-    [dispatch]
-  );
+  const { todolists, addTodolist } = useAppWithRedux();
 
   return (
     <div className="App">
