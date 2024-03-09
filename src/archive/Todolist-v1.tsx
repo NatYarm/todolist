@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { FilterValuesType } from '../app/App';
-import AddItemForm from '../addItemForm/AddItemForm';
-import EditableSpan from '../EditableSpan';
+import { FilterValuesType } from './App-v1';
+import AddItemForm from '../components/addItemForm/AddItemForm';
+import EditableSpan from '../components/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import { Delete } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import Checkbox from '../Checkbox';
+import Checkbox from '../components/Checkbox';
 
 export type TaskType = {
   id: string;

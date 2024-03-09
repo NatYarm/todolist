@@ -1,12 +1,22 @@
+import { useEffect } from 'react';
+import ButtonAppBar from '../../components/ButtonAppBar';
 import { Container, Grid, Paper } from '@mui/material';
-import AddItemForm from '../addItemForm/AddItemForm';
-import ButtonAppBar from '../ButtonAppBar';
+import AddItemForm from '../../components/addItemForm/AddItemForm';
 import './App.css';
-import TodolistWithRedux from '../todolist/TodolistWithRedux';
-import { useAppWithRedux } from './useAppWithRedux';
+import Todolist from '../todolist/Todolist';
+import { useApp } from './useApp';
+import { fetchTodolistsTC } from '../../reducers/todolistsReducer';
 
-const AppWithRedux = () => {
-  const { todolists, addTodolist } = useAppWithRedux();
+import { useAppDispatch } from '../../store/store';
+
+const App = () => {
+  const { todolists, addTodolist } = useApp();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodolistsTC);
+  }, []);
 
   return (
     <div className="App">
@@ -22,7 +32,7 @@ const AppWithRedux = () => {
                 elevation={3}
                 sx={{ padding: '20px', background: '#edebeb' }}
               >
-                <TodolistWithRedux todolist={el} />
+                <Todolist todolist={el} />
               </Paper>
             </Grid>
           ))}
@@ -32,4 +42,4 @@ const AppWithRedux = () => {
   );
 };
 
-export default AppWithRedux;
+export default App;

@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import AppWithRedux from './components/app/AppWithRedux';
+import App from './features/app/App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <AppWithRedux />
+    <App />
   </Provider>
 );

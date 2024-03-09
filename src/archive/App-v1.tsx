@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
-import Todolist, { TaskType } from '../todolist/Todolist';
+import Todolist, { TaskType } from './Todolist-v1';
 import { Container, Grid, Paper } from '@mui/material';
-import AddItemForm from '../addItemForm/AddItemForm';
-import ButtonAppBar from '../ButtonAppBar';
+import AddItemForm from '../components/addItemForm/AddItemForm';
+import ButtonAppBar from '../components/ButtonAppBar';
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 

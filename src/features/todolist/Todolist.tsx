@@ -1,18 +1,18 @@
-import EditableSpan from '../EditableSpan';
+import EditableSpan from '../../components/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import { Delete } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import AddItemForm from '../addItemForm/AddItemForm';
+import AddItemForm from '../../components/addItemForm/AddItemForm';
 import Task from '../task/Task';
 import { memo } from 'react';
-import { useTodolistWithRedux } from './hooks/useTodolistWithRedux';
+import { useTodolist } from './useTodolist';
 import { TodolistEntityType } from '../../reducers/todolistsReducer';
 
 type PropsType = {
   todolist: TodolistEntityType;
 };
 
-const TodolistWithRedux = memo(({ todolist }: PropsType) => {
+const Todolist = memo(({ todolist }: PropsType) => {
   const {
     tasksForTodolist,
     todolistId,
@@ -22,7 +22,7 @@ const TodolistWithRedux = memo(({ todolist }: PropsType) => {
     removeTodolist,
     changeTodolistTitle,
     changeFilterValue,
-  } = useTodolistWithRedux(todolist);
+  } = useTodolist(todolist);
 
   return (
     <div className="todoList">
@@ -37,7 +37,7 @@ const TodolistWithRedux = memo(({ todolist }: PropsType) => {
       {tasksForTodolist.length ? (
         <ul>
           {tasksForTodolist.map(t => (
-            <Task key={t.id} task={t} todolistId={todolistId} />
+            <Task key={t.id} taskId={t.id} todolistId={todolistId} />
           ))}
         </ul>
       ) : (
@@ -71,4 +71,4 @@ const TodolistWithRedux = memo(({ todolist }: PropsType) => {
   );
 });
 
-export default TodolistWithRedux;
+export default Todolist;

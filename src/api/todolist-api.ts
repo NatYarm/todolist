@@ -56,7 +56,7 @@ const instance = axios.create({
     'API-KEY': '3366c5e6-1cfe-418f-97d8-a19e39d7b27d',
   },
 });
-export const todolistAPI = {
+export const todolistsAPI = {
   getTodolists() {
     return instance.get<TodolistType[]>('todo-lists');
   },
@@ -78,7 +78,7 @@ export const todolistAPI = {
   },
 
   createTask(todolistId: string, title: string) {
-    return instance.post<ResponseType<TaskType>>(
+    return instance.post<ResponseType<{ item: TaskType }>>(
       `todo-lists/${todolistId}/tasks`,
       { title }
     );

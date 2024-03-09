@@ -1,8 +1,7 @@
-import Task from '../../components/task/Task';
+import Task from '../../features/task/Task';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ReduxStoreProviderDecorator } from '../../store/ReduxStoreProviderDecorator';
-import { useSelector } from 'react-redux';
-import { AppRootState } from '../../store/store';
+import { useAppSelector } from '../../store/store';
 
 import { v1 } from 'uuid';
 import { TaskPriorities, TaskStatuses, TaskType } from '../../api/todolist-api';
@@ -18,18 +17,7 @@ const meta: Meta<typeof Task> = {
 
   args: {
     todolistId: 'lfd-sdbll3nf-5e',
-    task: {
-      id: 'lopdn5-dfg-5d3',
-      title: 'React',
-      status: TaskStatuses.Completed,
-      todoListId: 'lfd-sdbll3nf-5e',
-      description: '',
-      priority: TaskPriorities.Low,
-      addedDate: new Date(),
-      startDate: new Date(),
-      deadline: new Date(),
-      order: 0,
-    },
+    taskId: 'lsfls;as',
   },
 
   decorators: [ReduxStoreProviderDecorator],
@@ -42,25 +30,12 @@ export const TaskIsDone: Story = {};
 
 export const TaskIsNotDone: Story = {
   args: {
-    task: {
-      id: 'hnpdn5-dfg-5d3',
-      title: 'JS',
-      status: TaskStatuses.New,
-      todoListId: 'lfd-sdbll3nf-5e',
-      description: '',
-      priority: TaskPriorities.Low,
-      addedDate: new Date(),
-      startDate: new Date(),
-      deadline: new Date(),
-      order: 0,
-    },
+    taskId: 'lsfkas;',
   },
 };
 
 const TaskExample = () => {
-  let task = useSelector<AppRootState, TaskType>(
-    state => state.tasks['todolistId1'][0]
-  );
+  let task = useAppSelector<TaskType>(state => state.tasks['todolistId1'][0]);
   if (!task)
     task = {
       id: v1(),
@@ -75,7 +50,7 @@ const TaskExample = () => {
       order: 0,
     };
 
-  return <Task todolistId="todolistId1" task={task} />;
+  return <Task todolistId="todolistId1" taskId={task.id} />;
 };
 
 export const TaskStory: Story = { render: () => <TaskExample /> };
