@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { todolistsAPI } from '../../api/todolist-api';
+import {
+  TaskPriorities,
+  TaskStatuses,
+  todolistsAPI,
+} from '../../api/todolist-api';
 
 export default {
   title: 'API-Todolists',
@@ -203,7 +207,14 @@ export const UpdateTask = () => {
 
   const updateTask = () => {
     todolistsAPI
-      .updateTask(todolistId, taskId, taskTitle)
+      .updateTask(todolistId, taskId, {
+        title: taskTitle,
+        description: 'Some description',
+        status: TaskStatuses.Completed,
+        priority: TaskPriorities.Low,
+        startDate: new Date(),
+        deadline: new Date(),
+      })
       .then(res => setState(res.data));
     setTodolistId('');
     setTaskId('');

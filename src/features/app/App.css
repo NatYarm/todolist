@@ -55,3 +55,8 @@
   display: block;
   padding: 10px 0 10px;
 }
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}

@@ -1,19 +1,24 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   TodolistEntityType,
-  addTodolistAC,
+  addTodolistTC,
+  fetchTodolistsTC,
 } from '../../reducers/todolistsReducer';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
-export const useApp = () => {
+export const useTodolists = () => {
   const dispatch = useAppDispatch();
   const todolists = useAppSelector<TodolistEntityType[]>(
     state => state.todolists
   );
 
+  useEffect(() => {
+    dispatch(fetchTodolistsTC());
+  }, [dispatch]);
+
   const addTodolist = useCallback(
     (title: string) => {
-      dispatch(addTodolistAC(title));
+      dispatch(addTodolistTC(title));
     },
     [dispatch]
   );

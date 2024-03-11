@@ -1,3 +1,4 @@
+import { TodolistType } from '../api/todolist-api';
 import {
   addTodolistAC,
   changeTodolistFilterAC,
@@ -43,15 +44,17 @@ test('correct todolist should be removed', () => {
 });
 
 test('correct todolist should be added', () => {
-  const newTodolistTitle = 'New Todolist';
+  const newTodolist: TodolistType = {
+    title: 'New Todolist',
+    order: 0,
+    addedDate: new Date(),
+    id: 'sdsfds',
+  };
 
-  const endState = todolistsReducer(
-    startState,
-    addTodolistAC(newTodolistTitle)
-  );
+  const endState = todolistsReducer(startState, addTodolistAC(newTodolist));
 
   expect(endState.length).toBe(3);
-  expect(endState[0].title).toBe(newTodolistTitle);
+  expect(endState[0].title).toBe(newTodolist.title);
   expect(endState[0].filter).toBe('all');
 });
 

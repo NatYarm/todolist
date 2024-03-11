@@ -2,12 +2,12 @@ import {
   FilterValuesType,
   TodolistEntityType,
   changeTodolistFilterAC,
-  changeTodolistTitleAC,
-  removeTodolistAC,
+  changeTodolistTitleTC,
+  removeTodolistTC,
 } from '../../reducers/todolistsReducer';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { addTaskAC } from '../../reducers/tasksReducer';
-import { useCallback } from 'react';
+import { addTaskTC, fetchTasksTC } from '../../reducers/tasksReducer';
+import { useCallback, useEffect } from 'react';
 import { TaskStatuses, TaskType } from '../../api/todolist-api';
 
 export const useTodolist = (todolist: TodolistEntityType) => {
@@ -16,20 +16,25 @@ export const useTodolist = (todolist: TodolistEntityType) => {
   const dispatch = useAppDispatch();
   const tasks = useAppSelector<TaskType[]>(state => state.tasks[todolistId]);
 
+  useEffect(() => {
+    dispatch(fetchTasksTC(todolistId));
+    //console.log('dispatch');
+  }, [dispatch, todolistId]);
+
   const addTask = useCallback(
     (title: string) => {
-      dispatch(addTaskAC(todolistId, title));
+      dispatch(addTaskTC(todolistId, title));
     },
     [dispatch, todolistId]
   );
 
   const removeTodolist = () => {
-    dispatch(removeTodolistAC(todolistId));
+    dispatch(removeTodolistTC(todolistId));
   };
 
   const changeTodolistTitle = useCallback(
     (newTitle: string) => {
-      dispatch(changeTodolistTitleAC(todolistId, newTitle));
+      dispatch(changeTodolistTitleTC(todolistId, newTitle));
     },
     [dispatch, todolistId]
   );

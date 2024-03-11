@@ -1,43 +1,21 @@
-import { useDispatch } from 'react-redux';
+import { memo } from 'react';
 import { Delete } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
-import EditableSpan from '../../components/EditableSpan';
 import Checkbox from '../../components/Checkbox';
-
-import {
-  changeTaskStatusAC,
-  changeTaskTitleAC,
-  removeTaskAC,
-} from '../../reducers/tasksReducer';
-import { memo } from 'react';
-import { TaskStatuses, TaskType } from '../../api/todolist-api';
-import { useAppSelector } from '../../store/store';
+import EditableSpan from '../../components/EditableSpan';
+import { TaskStatuses } from '../../api/todolist-api';
+import { useTask } from './useTask';
 
 type TaskPropsType = {
-  taskId: string;
   todolistId: string;
+  taskId: string;
 };
 
-const Task = memo((props: TaskPropsType) => {
-  const { taskId, todolistId } = props;
-  const task = useAppSelector<TaskType>(
-    state => state.tasks[todolistId].find(t => t.id === taskId) as TaskType
+const Task = memo(({ todolistId, taskId }: TaskPropsType) => {
+  const { task, removeTask, changeTaskStatus, changeTaskTitle } = useTask(
+    todolistId,
+    taskId
   );
-
-  const dispatch = useDispatch();
-
-  const removeTask = () => {
-    dispatch(removeTaskAC(todolistId, taskId));
-  };
-
-  const changeTaskStatus = (checked: boolean) => {
-    const newStatus = checked ? TaskStatuses.Completed : TaskStatuses.New;
-    dispatch(changeTaskStatusAC(todolistId, taskId, newStatus));
-  };
-
-  const changeTaskTitle = (newTitle: string) => {
-    dispatch(changeTaskTitleAC(todolistId, taskId, newTitle));
-  };
 
   return (
     <li
