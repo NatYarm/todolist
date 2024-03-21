@@ -1,7 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import AddItemForm, {
-  AddItemProps,
-} from '../../components/addItemForm/AddItemForm';
+import AddItemForm from '../../components/addItemForm/AddItemForm';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import TextField from '@mui/material/TextField';
@@ -30,7 +28,12 @@ type Story = StoryObj<typeof AddItemForm>;
 
 export const AddItemFormStory: Story = {};
 
-const AddItemFormError = ({ addItem }: AddItemProps) => {
+type AddItemProps = {
+  addItem: (title: string) => void;
+  disabled?: boolean;
+};
+
+const AddItemFormError = ({ addItem, disabled }: AddItemProps) => {
   const [title, setTitle] = useState('');
   const [inputError, setInputError] = useState(true);
 
@@ -76,6 +79,7 @@ const AddItemFormError = ({ addItem }: AddItemProps) => {
         onKeyDown={addTitleOnKeyDown}
         onChange={onChangeHandler}
         sx={{ background: '#fff' }}
+        disabled={disabled}
       />
 
       <Button
@@ -95,5 +99,10 @@ export const AddItemFormErrorStory: Story = {
     <AddItemFormError
       addItem={action('Button clicked with empty input field')}
     />
+  ),
+};
+export const AddItemFormDisabledStory: Story = {
+  render: () => (
+    <AddItemForm addItem={action('Field disabled')} disabled={true} />
   ),
 };

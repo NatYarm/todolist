@@ -10,16 +10,16 @@ import { addTaskTC, fetchTasksTC } from '../../reducers/tasksReducer';
 import { useCallback, useEffect } from 'react';
 import { TaskStatuses, TaskType } from '../../api/todolist-api';
 
-export const useTodolist = (todolist: TodolistEntityType) => {
+export const useTodolist = (todolist: TodolistEntityType, demo: boolean) => {
   const { id: todolistId, title, filter } = todolist;
 
   const dispatch = useAppDispatch();
   const tasks = useAppSelector<TaskType[]>(state => state.tasks[todolistId]);
 
   useEffect(() => {
+    if (demo) return;
     dispatch(fetchTasksTC(todolistId));
-    //console.log('dispatch');
-  }, [dispatch, todolistId]);
+  }, [dispatch, demo, todolistId]);
 
   const addTask = useCallback(
     (title: string) => {

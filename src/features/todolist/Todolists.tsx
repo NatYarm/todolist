@@ -3,8 +3,8 @@ import AddItemForm from '../../components/addItemForm/AddItemForm';
 import Todolist from './Todolist';
 import { useTodolists } from './useTodolists';
 
-const Todolists = () => {
-  const { todolists, addTodolist } = useTodolists();
+const Todolists = ({ demo = false }: PropsType) => {
+  const { todolists, addTodolist } = useTodolists(demo);
 
   return (
     <>
@@ -18,13 +18,17 @@ const Todolists = () => {
               elevation={3}
               sx={{ padding: '20px', background: '#edebeb' }}
             >
-              <Todolist todolist={el} />
+              <Todolist todolist={el} demo={demo} />
             </Paper>
           </Grid>
         ))}
       </Grid>
     </>
   );
+};
+
+type PropsType = {
+  demo?: boolean;
 };
 
 export default Todolists;

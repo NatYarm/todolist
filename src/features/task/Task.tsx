@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Delete } from '@mui/icons-material';
+import Delete from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '../../components/Checkbox';
 import EditableSpan from '../../components/EditableSpan';

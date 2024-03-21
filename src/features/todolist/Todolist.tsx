@@ -10,9 +10,10 @@ import { TodolistEntityType } from '../../reducers/todolistsReducer';
 
 type PropsType = {
   todolist: TodolistEntityType;
+  demo?: boolean;
 };
 
-const Todolist = memo(({ todolist }: PropsType) => {
+const Todolist = memo(({ todolist, demo = false }: PropsType) => {
   const {
     tasksForTodolist,
     todolistId,
@@ -22,17 +23,23 @@ const Todolist = memo(({ todolist }: PropsType) => {
     removeTodolist,
     changeTodolistTitle,
     changeFilterValue,
-  } = useTodolist(todolist);
+  } = useTodolist(todolist, demo);
+
+  const isDisabled = todolist.entityStatus === 'loading';
 
   return (
     <div className="todoList">
       <h3>
         <EditableSpan oldTitle={title} callback={changeTodolistTitle} />
-        <IconButton aria-label="delete" onClick={removeTodolist}>
+        <IconButton
+          aria-label="delete"
+          onClick={removeTodolist}
+          disabled={isDisabled}
+        >
           <Delete />
         </IconButton>
       </h3>
-      <AddItemForm addItem={addTask} />
+      <AddItemForm addItem={addTask} disabled={isDisabled} />
 
       {tasksForTodolist.length ? (
         <ul>

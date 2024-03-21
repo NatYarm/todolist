@@ -1,9 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import App from '../../features/app/App';
 import { ReduxStoreProviderDecorator } from '../../store/ReduxStoreProviderDecorator';
 
-const meta: Meta<typeof App> = {
-  title: 'Todolists/AppWithRedux',
+export default {
+  title: 'Todolists/App',
   component: App,
   parameters: {
     layout: 'centered',
@@ -14,7 +13,6 @@ const meta: Meta<typeof App> = {
   decorators: [ReduxStoreProviderDecorator],
 };
 
-export default meta;
-type Story = StoryObj<typeof App>;
-
-export const AppWithReduxStory: Story = {};
+export const AppBaseExample = (props: any) => {
+  return <App demo={true} />;
+};

@@ -4,11 +4,12 @@ import { Add } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
 import { useAddItemForm } from './useAddItemForm';
 
-export type AddItemProps = {
+type AddItemProps = {
   addItem: (title: string) => void;
+  disabled?: boolean;
 };
 
-const AddItemForm = memo(({ addItem }: AddItemProps) => {
+const AddItemForm = memo(({ addItem, disabled }: AddItemProps) => {
   const {
     title,
     inputError,
@@ -36,6 +37,7 @@ const AddItemForm = memo(({ addItem }: AddItemProps) => {
         onKeyDown={addTitleOnKeyDown}
         onChange={onChangeHandler}
         sx={{ background: '#fff' }}
+        disabled={disabled}
       />
 
       <Button
@@ -43,6 +45,7 @@ const AddItemForm = memo(({ addItem }: AddItemProps) => {
         onClick={addTitleHandler}
         style={styles}
         color="primary"
+        disabled={disabled}
       >
         <Add />
       </Button>

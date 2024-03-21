@@ -41,9 +41,8 @@ export const todolistsAPI = {
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
     return instance.put<ResponseType<TaskType>>(
       `todo-lists/${todolistId}/tasks/${taskId}`,
-      {
-        model,
-      }
+
+      model
     );
   },
 };
@@ -90,9 +89,10 @@ type GetTasksResponseType = {
   items: TaskType[];
 };
 
-type ResponseType<T = {}> = {
+export type ResponseType<T = {}> = {
   resultCode: number;
-  message: string[];
+  messages: string[];
+  fieldsErrors: string[];
   data: T;
 };
 
@@ -103,4 +103,21 @@ export type UpdateTaskModelType = {
   priority: TaskPriorities;
   startDate: Date;
   deadline: Date;
+};
+
+export enum RESULT_CODE {
+  SUCCESS = 0,
+  ERROR = 1,
+  CAPTCHA_ERROR = 10,
+}
+
+export type ErrorType = {
+  statusCode: number;
+  messages: [
+    {
+      message: string;
+      field: string;
+    }
+  ];
+  error: string;
 };
