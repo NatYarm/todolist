@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import {
-  TodolistEntityType,
   addTodolistTC,
   fetchTodolistsTC,
 } from '../../reducers/todolistsReducer';
@@ -8,14 +7,14 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch();
-  const todolists = useAppSelector<TodolistEntityType[]>(
-    state => state.todolists
-  );
+  const todolists = useAppSelector(state => state.todolists);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   useEffect(() => {
     if (demo) return;
+    if (!isLoggedIn) return;
     dispatch(fetchTodolistsTC());
-  }, [dispatch, demo]);
+  }, [dispatch, demo, isLoggedIn]);
 
   const addTodolist = useCallback(
     (title: string) => {

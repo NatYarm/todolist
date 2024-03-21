@@ -2,9 +2,16 @@ import { Grid, Paper } from '@mui/material';
 import AddItemForm from '../../components/addItemForm/AddItemForm';
 import Todolist from './Todolist';
 import { useTodolists } from './useTodolists';
+import { useAppSelector } from '../../store/store';
+import { Navigate } from 'react-router-dom';
 
 const Todolists = ({ demo = false }: PropsType) => {
   const { todolists, addTodolist } = useTodolists(demo);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  if (!isLoggedIn) {
+    return <Navigate to="login" />;
+  }
 
   return (
     <>

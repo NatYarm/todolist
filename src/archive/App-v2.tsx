@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
-import Todolist from './components/Todolist';
+import Todolist from '../components/Todolist';
 
 export type FilterValuesType = 'all' | 'completed' | 'active';
 type todolistsType = { id: string; title: string; filter: FilterValuesType };
 
-function App() {
+export function Appv2() {
   const todolistId1 = v1();
   const todolistId2 = v1();
 
@@ -96,5 +96,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

@@ -7,11 +7,13 @@ import {
 } from '../reducers/todolistsReducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AppActionsType, appReducer } from '../reducers/appReducer';
+import { LoginActionsType, authReducer } from '../reducers/authReducer';
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
   tasks: tasksReducer,
   app: appReducer,
+  auth: authReducer,
 });
 
 //@ts-ignore
@@ -33,7 +35,8 @@ export const useAppSelector: TypedUseSelectorHook<AppRootStateType> =
 export type AllActionsType =
   | TodolistsActionsType
   | TasksActionsType
-  | AppActionsType;
+  | AppActionsType
+  | LoginActionsType;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

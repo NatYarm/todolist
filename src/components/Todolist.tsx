@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FilterValuesType } from '../App';
+import { FilterValuesType } from '../archive/App-v2';
 import AddItemForm from './AddItemForm';
 import EditableSpan from './EditableSpan';
 
