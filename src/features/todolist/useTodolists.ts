@@ -4,15 +4,17 @@ import {
   fetchTodolistsTC,
 } from '../../reducers/todolistsReducer';
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { selectIsLoggedIn } from 'reducers/authReducer';
+import { selectTodolists } from './todolistsSelectors';
 
 export const useTodolists = (demo: boolean) => {
   const dispatch = useAppDispatch();
-  const todolists = useAppSelector(state => state.todolists);
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const todolists = useAppSelector(selectTodolists);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    if (demo) return;
-    if (!isLoggedIn) return;
+    if (demo || !isLoggedIn) return;
+
     dispatch(fetchTodolistsTC());
   }, [dispatch, demo, isLoggedIn]);
 

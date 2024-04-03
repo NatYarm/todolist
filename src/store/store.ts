@@ -1,13 +1,11 @@
-import { combineReducers, legacy_createStore, applyMiddleware } from 'redux';
-import { ThunkAction, ThunkDispatch, thunk } from 'redux-thunk';
-import { TasksActionsType, tasksReducer } from '../reducers/tasksReducer';
-import {
-  TodolistsActionsType,
-  todolistsReducer,
-} from '../reducers/todolistsReducer';
+import { combineReducers } from 'redux';
+import { configureStore, UnknownAction } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { AppActionsType, appReducer } from '../reducers/appReducer';
-import { LoginActionsType, authReducer } from '../reducers/authReducer';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { tasksReducer } from '../reducers/tasksReducer';
+import { todolistsReducer } from '../reducers/todolistsReducer';
+import { appReducer } from '../reducers/appReducer';
+import { authReducer } from '../reducers/authReducer';
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
@@ -16,33 +14,27 @@ const rootReducer = combineReducers({
   auth: authReducer,
 });
 
-//@ts-ignore
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
+export const store = configureStore({
+  reducer: rootReducer,
+});
 
-export type AppRootStateType = ReturnType<typeof rootReducer>;
+export type AppRootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatchType = ThunkDispatch<
-  AppRootStateType,
+  AppRootState,
   unknown,
-  AllActionsType
+  UnknownAction
 >;
 
 export const useAppDispatch = useDispatch<AppDispatchType>;
 
-export const useAppSelector: TypedUseSelectorHook<AppRootStateType> =
-  useSelector;
-
-export type AllActionsType =
-  | TodolistsActionsType
-  | TasksActionsType
-  | AppActionsType
-  | LoginActionsType;
+export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
-  AppRootStateType,
+  AppRootState,
   unknown,
-  AllActionsType
+  UnknownAction
 >;
 
 //@ts-ignore

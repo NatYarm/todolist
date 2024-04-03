@@ -10,11 +10,9 @@ import {
 } from '@mui/material';
 
 import { useFormik } from 'formik';
-
 import { Navigate } from 'react-router-dom';
-
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { loginTC } from '../../reducers/authReducer';
+import { loginTC, selectIsLoggedIn } from '../../reducers/authReducer';
 
 type ErrorsType = {
   email?: string;
@@ -23,7 +21,7 @@ type ErrorsType = {
 
 export const Login = () => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const formik = useFormik({
     initialValues: {
@@ -49,16 +47,6 @@ export const Login = () => {
         errors.password = 'Password should be more than 4 symbols';
       }
       return errors;
-      // if (!values.email) {
-      //   return {
-      //     email: 'Email is required',
-      //   };
-      // }
-      // if (!values.password) {
-      //   return {
-      //     password: 'Password is required',
-      //   };
-      // }
     },
   });
 

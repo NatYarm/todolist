@@ -1,20 +1,22 @@
 import {
   FilterValuesType,
   TodolistEntityType,
-  changeTodolistFilterAC,
+  todolistsActions,
   changeTodolistTitleTC,
   removeTodolistTC,
 } from '../../reducers/todolistsReducer';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { addTaskTC, fetchTasksTC } from '../../reducers/tasksReducer';
 import { useCallback, useEffect } from 'react';
-import { TaskStatuses, TaskType } from '../../api/todolist-api';
+import { TaskStatuses } from '../../api/todolist-api';
+import { selectTasks } from 'features/task/tasksSelectors';
 
 export const useTodolist = (todolist: TodolistEntityType, demo: boolean) => {
   const { id: todolistId, title, filter } = todolist;
 
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector<TaskType[]>(state => state.tasks[todolistId]);
+  const allTasks = useAppSelector(selectTasks);
+  const tasks = allTasks[todolistId];
 
   useEffect(() => {
     if (demo) return;
@@ -40,7 +42,12 @@ export const useTodolist = (todolist: TodolistEntityType, demo: boolean) => {
   );
 
   const changeFilterValue = (newFilterValue: FilterValuesType) => {
-    dispatch(changeTodolistFilterAC(todolistId, newFilterValue));
+    dispatch(
+      todolistsActions.changeTodolistFilter({
+        id: todolistId,
+        filter: newFilterValue,
+      })
+    );
   };
 
   let tasksForTodolist = tasks;

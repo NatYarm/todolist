@@ -2,7 +2,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { SyntheticEvent } from 'react';
 
-import { setAppErrorAC } from '../reducers/appReducer';
+import { appActions } from '../reducers/appReducer';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
 export const ErrorSnackbar = () => {
@@ -16,7 +16,7 @@ export const ErrorSnackbar = () => {
       return;
     }
 
-    dispatch(setAppErrorAC(null));
+    dispatch(appActions.setAppError({ error: null }));
   };
 
   return (

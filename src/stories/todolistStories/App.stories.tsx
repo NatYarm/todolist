@@ -1,6 +1,8 @@
 import App from '../../features/app/App';
 import { ReduxStoreProviderDecorator } from '../../store/ReduxStoreProviderDecorator';
 
+import { MemoryRouter } from 'react-router-dom';
+
 export default {
   title: 'Todolists/App',
   component: App,
@@ -14,5 +16,9 @@ export default {
 };
 
 export const AppBaseExample = (props: any) => {
-  return <App demo={true} />;
+  return (
+    <MemoryRouter>
+      <App demo={true} />
+    </MemoryRouter>
+  );
 };

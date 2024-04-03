@@ -2,7 +2,6 @@ import Task from '../../features/task/Task';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ReduxStoreProviderDecorator } from '../../store/ReduxStoreProviderDecorator';
 import { useAppSelector } from '../../store/store';
-
 import { v1 } from 'uuid';
 import { TaskPriorities, TaskStatuses, TaskType } from '../../api/todolist-api';
 

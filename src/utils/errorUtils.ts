@@ -1,19 +1,17 @@
 import { Dispatch } from 'redux';
 import { ErrorType, ResponseType } from '../api/todolist-api';
-import { setAppErrorAC, setAppStatusAC } from '../reducers/appReducer';
+import { appActions } from '../reducers/appReducer';
 import { isAxiosError } from 'axios';
 
 export const handleError = (error: unknown, dispatch: Dispatch) => {
   let errorMessage: string;
-  if (isAxiosError<ErrorType>(error)) {
-    errorMessage = error.response
-      ? error.response.data.messages[0].message
-      : error.message;
+  if (isAxiosError<ErrorType>(error) && error.response) {
+    errorMessage = error.response.data.messages[0].message;
   } else {
     errorMessage = (error as Error).message;
   }
-  dispatch(setAppErrorAC(errorMessage));
-  dispatch(setAppStatusAC('failed'));
+  dispatch(appActions.setAppError({ error: errorMessage }));
+  dispatch(appActions.setAppStatus({ status: 'failed' }));
 };
 
 export const handleServerAppError = <T>(
@@ -21,11 +19,11 @@ export const handleServerAppError = <T>(
   dispatch: Dispatch
 ) => {
   if (data.messages.length) {
-    dispatch(setAppErrorAC(data.messages[0]));
+    dispatch(appActions.setAppError({ error: data.messages[0] }));
   } else {
-    dispatch(setAppErrorAC('Some error occurred'));
+    dispatch(appActions.setAppError({ error: 'Some error occurred' }));
   }
-  dispatch(setAppStatusAC('failed'));
+  dispatch(appActions.setAppStatus({ status: 'failed' }));
 };
 
 // export const handleServerNetworkError = (

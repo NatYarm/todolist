@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.4",
     "@mui/material": "^5.15.4",
+    "@reduxjs/toolkit": "^2.2.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -59,8 +60,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
     "@storybook/addon-essentials": "^7.6.17",
     "@storybook/addon-interactions": "^7.6.17",
@@ -81,11 +80,12 @@
     "puppeteer": "^22.1.0",
     "start-server-and-test": "^2.0.3",
     "storybook": "^7.6.17",
+    "storybook-addon-remix-react-router": "^3.0.0",
     "webpack": "^5.90.3"
   },
   "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
+    ]
   }
 }

@@ -9,16 +9,21 @@ import Todolists from '../todolist/Todolists';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { ErrorSnackbar } from '../../components/ErrorSnackbar';
 import { Login } from '../login/Login';
-import { meTC } from '../../reducers/appReducer';
+import {
+  meTC,
+  selectIsInitialized,
+  selectStatus,
+} from '../../reducers/appReducer';
 
 const App = ({ demo = false }: PropsType) => {
-  const status = useAppSelector(state => state.app.status);
-  const isInitialized = useAppSelector(state => state.app.isInitialized);
+  const status = useAppSelector(selectStatus);
+  const isInitialized = useAppSelector(selectIsInitialized);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (demo) return;
     dispatch(meTC());
-  }, [dispatch]);
+  }, [dispatch, demo]);
 
   if (!isInitialized) {
     return (
