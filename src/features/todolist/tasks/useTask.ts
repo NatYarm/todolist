@@ -1,11 +1,9 @@
-import { TaskStatuses, TaskType } from '../../api/todolist-api';
-import { updateTaskTC, removeTaskTC } from '../../reducers/tasksReducer';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { TaskStatuses, TaskType } from '../../../api/todolist-api';
+import { updateTaskTC, removeTaskTC } from './tasksSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 export const useTask = (todolistId: string, taskId: string) => {
-  const task = useAppSelector<TaskType>(
-    state => state.tasks[todolistId].find(t => t.id === taskId) as TaskType
-  );
+  const task = useAppSelector<TaskType>(state => state.tasks[todolistId].find(t => t.id === taskId) as TaskType);
   const dispatch = useAppDispatch();
 
   const removeTask = () => {

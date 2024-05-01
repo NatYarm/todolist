@@ -1,4 +1,4 @@
-import Task from '../../features/task/Task';
+import Task from '../../features/todolist/tasks/Task';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ReduxStoreProviderDecorator } from '../../store/ReduxStoreProviderDecorator';
 import { useAppSelector } from '../../store/store';

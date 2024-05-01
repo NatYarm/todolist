@@ -4,10 +4,11 @@ import Todolist from './Todolist';
 import { useTodolists } from './useTodolists';
 import { useAppSelector } from '../../store/store';
 import { Navigate } from 'react-router-dom';
+import { selectIsLoggedIn } from 'features/auth/authSlice';
 
 const Todolists = ({ demo = false }: PropsType) => {
-  const { todolists, addTodolist } = useTodolists(demo);
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const { todolists, allTasks, addTodolist } = useTodolists(demo);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to="login" />;
@@ -21,11 +22,8 @@ const Todolists = ({ demo = false }: PropsType) => {
       <Grid container spacing={3} sx={{ padding: '15px' }}>
         {todolists.map(el => (
           <Grid item key={el.id}>
-            <Paper
-              elevation={3}
-              sx={{ padding: '20px', background: '#edebeb' }}
-            >
-              <Todolist todolist={el} demo={demo} />
+            <Paper elevation={3} sx={{ padding: '20px', background: '#edebeb' }}>
+              <Todolist todolist={el} demo={demo} tasks={allTasks[el.id]} />
             </Paper>
           </Grid>
         ))}

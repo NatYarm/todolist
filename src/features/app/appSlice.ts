@@ -1,13 +1,13 @@
-import { RESULT_CODE, authAPI } from '../api/todolist-api';
-import { AppThunk } from '../store/store';
-import { authActions } from '../reducers/authReducer';
-import { handleError } from '../utils/errorUtils';
+import { RESULT_CODE, authAPI } from '../../api/todolist-api';
+import { AppThunk } from '../../store/store';
+import { authActions } from '../auth/authSlice';
+import { handleError } from '../../utils/errorUtils';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'app',
   initialState: {
-    status: 'idle',
+    status: 'idle' as RequestStatusType,
     error: null as string | null,
     isInitialized: false,
   },
@@ -15,16 +15,10 @@ const slice = createSlice({
     setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
       state.error = action.payload.error;
     },
-    setAppStatus: (
-      state,
-      action: PayloadAction<{ status: RequestStatusType }>
-    ) => {
+    setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
       state.status = action.payload.status;
     },
-    setAppIsInitialized: (
-      state,
-      action: PayloadAction<{ isInitialized: boolean }>
-    ) => {
+    setAppIsInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
       state.isInitialized = action.payload.isInitialized;
     },
   },
@@ -37,8 +31,7 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer;
 export const appActions = slice.actions;
-export const { selectIsInitialized, selectError, selectStatus } =
-  slice.selectors;
+export const { selectIsInitialized, selectError, selectStatus } = slice.selectors;
 
 //thunks
 

@@ -1,11 +1,11 @@
 import { TodolistType } from '../api/todolist-api';
-import { RequestStatusType } from '../reducers/appReducer';
+import { RequestStatusType } from '../features/app/appSlice';
 import {
   todolistsActions,
   FilterValuesType,
   TodolistEntityType,
   todolistsReducer,
-} from '../reducers/todolistsReducer';
+} from '../features/todolist/todolistsSlice';
 import { v1 } from 'uuid';
 
 let todolistId1: string;
@@ -37,10 +37,7 @@ beforeEach(() => {
 });
 
 test('correct todolist should be removed', () => {
-  const endState = todolistsReducer(
-    startState,
-    todolistsActions.removeTodolist({ id: todolistId1 })
-  );
+  const endState = todolistsReducer(startState, todolistsActions.removeTodolist({ id: todolistId1 }));
 
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe(todolistId2);
@@ -54,10 +51,7 @@ test('correct todolist should be added', () => {
     id: 'sdsfds',
   };
 
-  const endState = todolistsReducer(
-    startState,
-    todolistsActions.addTodolist({ todolist: newTodolist })
-  );
+  const endState = todolistsReducer(startState, todolistsActions.addTodolist({ todolist: newTodolist }));
 
   expect(endState.length).toBe(3);
   expect(endState[0].title).toBe(newTodolist.title);

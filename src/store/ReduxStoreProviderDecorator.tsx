@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
 import { combineReducers } from 'redux';
-import { tasksReducer } from '../reducers/tasksReducer';
-import { todolistsReducer } from '../reducers/todolistsReducer';
+import { tasksReducer } from '../features/todolist/tasks/tasksSlice';
+import { todolistsReducer } from '../features/todolist/todolistsSlice';
 import { v1 } from 'uuid';
 import { TaskPriorities, TaskStatuses } from '../api/todolist-api';
-import { appReducer } from '../reducers/appReducer';
-import { authReducer } from 'reducers/authReducer';
+import { appReducer } from '../features/app/appSlice';
+import { authReducer } from 'features/auth/authSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { AppRootState } from './store';
 
@@ -103,8 +103,7 @@ const initialGlobalState: AppRootState = {
 export const storyBookStore = configureStore({
   reducer: rootReducer,
   preloadedState: initialGlobalState,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({ serializableCheck: false }),
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {

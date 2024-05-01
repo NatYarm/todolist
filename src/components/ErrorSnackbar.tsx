@@ -2,7 +2,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { SyntheticEvent } from 'react';
 
-import { appActions } from '../reducers/appReducer';
+import { appActions } from '../features/app/appSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
 export const ErrorSnackbar = () => {
@@ -22,12 +22,7 @@ export const ErrorSnackbar = () => {
   return (
     <div>
       <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
-        <Alert
-          onClose={handleClose}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
+        <Alert onClose={handleClose} severity="error" variant="filled" sx={{ width: '100%' }}>
           {error}
         </Alert>
       </Snackbar>

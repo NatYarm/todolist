@@ -1,12 +1,10 @@
-import { handleError } from './../utils/errorUtils';
+import { handleError } from 'utils/errorUtils';
 import { Dispatch } from 'redux';
-import { LoginParamsType, RESULT_CODE, authAPI } from '../api/todolist-api';
-import { AppThunk } from '../store/store';
-import { handleServerAppError } from '../utils/errorUtils';
-
-import { todolistsActions } from './todolistsReducer';
+import { LoginParamsType, RESULT_CODE, authAPI } from 'api/todolist-api';
+import { AppThunk } from 'store/store';
+import { handleServerAppError } from '../../utils/errorUtils';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { appActions } from './appReducer';
+import { appActions } from '../app/appSlice';
 import { clearTasksAndTodos } from 'common-actions/commonActions';
 
 const slice = createSlice({
@@ -61,5 +59,3 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
     handleError(error, dispatch);
   }
 };
-
-//export type LoginActionsType = ReturnType<typeof setIsLoggedInAC>;

@@ -1,10 +1,6 @@
-import {
-  TasksStateType,
-  tasksActions,
-  tasksReducer,
-} from '../reducers/tasksReducer';
+import { TasksStateType, tasksActions, tasksReducer } from '../features/todolist/tasks/tasksSlice';
 
-import { todolistsActions } from '../reducers/todolistsReducer';
+import { todolistsActions } from '../features/todolist/todolistsSlice';
 import { TaskPriorities, TaskStatuses } from '../api/todolist-api';
 
 let startState: TasksStateType;
@@ -127,9 +123,7 @@ test('correct task should be added to correct array', () => {
   expect(endState['todolistId2'].length).toBe(4);
   expect(endState['todolistId2'][0].id).toBeDefined();
   expect(endState['todolistId2'][0].title).toBe('juice');
-  expect(endState['todolistId2'][0].status === TaskStatuses.Completed).toBe(
-    false
-  );
+  expect(endState['todolistId2'][0].status === TaskStatuses.Completed).toBe(false);
 });
 
 test('status of specified task should be changed', () => {
@@ -143,12 +137,8 @@ test('status of specified task should be changed', () => {
 
   const endState = tasksReducer(startState, action);
 
-  expect(endState['todolistId2'][1].status === TaskStatuses.Completed).toBe(
-    false
-  );
-  expect(endState['todolistId1'][1].status === TaskStatuses.Completed).toBe(
-    true
-  );
+  expect(endState['todolistId2'][1].status === TaskStatuses.Completed).toBe(false);
+  expect(endState['todolistId1'][1].status === TaskStatuses.Completed).toBe(true);
 });
 
 test('title of specified task should be changed', () => {

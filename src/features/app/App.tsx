@@ -8,12 +8,9 @@ import './App.css';
 import Todolists from '../todolist/Todolists';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { ErrorSnackbar } from '../../components/ErrorSnackbar';
-import { Login } from '../login/Login';
-import {
-  meTC,
-  selectIsInitialized,
-  selectStatus,
-} from '../../reducers/appReducer';
+
+import { meTC, selectIsInitialized, selectStatus } from './appSlice';
+import Login from '../auth/Login';
 
 const App = ({ demo = false }: PropsType) => {
   const status = useAppSelector(selectStatus);
@@ -53,10 +50,7 @@ const App = ({ demo = false }: PropsType) => {
         <Routes>
           <Route path="/" element={<Todolists />} />
           <Route path="login" element={<Login />} />
-          <Route
-            path="404"
-            element={<h1 style={{ textAlign: 'center' }}>Page Not Found</h1>}
-          />
+          <Route path="404" element={<h1 style={{ textAlign: 'center' }}>Page Not Found</h1>} />
           <Route path="*" element={<Navigate to={'404'} />} />
         </Routes>
       </Container>

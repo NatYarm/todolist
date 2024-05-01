@@ -1,11 +1,11 @@
 import { useState, KeyboardEvent, memo } from 'react';
 
-type EditableSpanProps = {
+type Props = {
   oldTitle: string;
   callback: (newTitle: string) => void;
 };
 
-const EditableSpan = memo(({ oldTitle, callback }: EditableSpanProps) => {
+const EditableSpan = memo(({ oldTitle, callback }: Props) => {
   const [edit, setEdit] = useState(false);
   const [newTitle, setNewTitle] = useState(oldTitle);
 
@@ -25,13 +25,7 @@ const EditableSpan = memo(({ oldTitle, callback }: EditableSpanProps) => {
   };
 
   return edit ? (
-    <input
-      value={newTitle}
-      onChange={onChangeHandler}
-      onKeyDown={addTitleOnKeyDown}
-      onBlur={activateEdit}
-      autoFocus
-    />
+    <input value={newTitle} onChange={onChangeHandler} onKeyDown={addTitleOnKeyDown} onBlur={activateEdit} autoFocus />
   ) : (
     <span onDoubleClick={activateEdit}>{oldTitle}</span>
   );

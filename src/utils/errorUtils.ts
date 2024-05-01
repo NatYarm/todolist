@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { ErrorType, ResponseType } from '../api/todolist-api';
-import { appActions } from '../reducers/appReducer';
+import { appActions } from '../features/app/appSlice';
 import { isAxiosError } from 'axios';
 
 export const handleError = (error: unknown, dispatch: Dispatch) => {
@@ -14,10 +14,7 @@ export const handleError = (error: unknown, dispatch: Dispatch) => {
   dispatch(appActions.setAppStatus({ status: 'failed' }));
 };
 
-export const handleServerAppError = <T>(
-  data: ResponseType<T>,
-  dispatch: Dispatch
-) => {
+export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: Dispatch) => {
   if (data.messages.length) {
     dispatch(appActions.setAppError({ error: data.messages[0] }));
   } else {

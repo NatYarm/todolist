@@ -4,19 +4,16 @@ import {
   todolistsActions,
   changeTodolistTitleTC,
   removeTodolistTC,
-} from '../../reducers/todolistsReducer';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { addTaskTC, fetchTasksTC } from '../../reducers/tasksReducer';
+} from './todolistsSlice';
+import { useAppDispatch } from '../../store/store';
+import { addTaskTC, fetchTasksTC } from './tasks/tasksSlice';
 import { useCallback, useEffect } from 'react';
-import { TaskStatuses } from '../../api/todolist-api';
-import { selectTasks } from 'features/task/tasksSelectors';
+import { TaskStatuses, TaskType } from '../../api/todolist-api';
 
-export const useTodolist = (todolist: TodolistEntityType, demo: boolean) => {
+export const useTodolist = (todolist: TodolistEntityType, tasks: TaskType[], demo: boolean) => {
   const { id: todolistId, title, filter } = todolist;
 
   const dispatch = useAppDispatch();
-  const allTasks = useAppSelector(selectTasks);
-  const tasks = allTasks[todolistId];
 
   useEffect(() => {
     if (demo) return;

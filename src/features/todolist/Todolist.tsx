@@ -3,17 +3,19 @@ import IconButton from '@mui/material/IconButton';
 import { Delete } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import AddItemForm from '../../components/addItemForm/AddItemForm';
-import Task from '../task/Task';
+import Task from './tasks/Task';
 import { memo } from 'react';
 import { useTodolist } from './useTodolist';
-import { TodolistEntityType } from '../../reducers/todolistsReducer';
+import { TodolistEntityType } from './todolistsSlice';
+import { TaskType } from 'api/todolist-api';
 
 type PropsType = {
   todolist: TodolistEntityType;
+  tasks: TaskType[];
   demo?: boolean;
 };
 
-const Todolist = memo(({ todolist, demo = false }: PropsType) => {
+const Todolist = memo(({ todolist, tasks, demo = false }: PropsType) => {
   const {
     tasksForTodolist,
     todolistId,
@@ -23,7 +25,7 @@ const Todolist = memo(({ todolist, demo = false }: PropsType) => {
     removeTodolist,
     changeTodolistTitle,
     changeFilterValue,
-  } = useTodolist(todolist, demo);
+  } = useTodolist(todolist, tasks, demo);
 
   const isDisabled = todolist.entityStatus === 'loading';
 
@@ -31,11 +33,7 @@ const Todolist = memo(({ todolist, demo = false }: PropsType) => {
     <div className="todoList">
       <h3>
         <EditableSpan oldTitle={title} callback={changeTodolistTitle} />
-        <IconButton
-          aria-label="delete"
-          onClick={removeTodolist}
-          disabled={isDisabled}
-        >
+        <IconButton aria-label="delete" onClick={removeTodolist} disabled={isDisabled}>
           <Delete />
         </IconButton>
       </h3>
