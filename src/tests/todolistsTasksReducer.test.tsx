@@ -1,19 +1,23 @@
-import { TaskPriorities, TaskStatuses } from '../api/todolist-api';
-import { TasksStateType, tasksReducer } from '../features/todolist/tasks/tasksSlice';
-import { TodolistEntityType, todolistsActions, todolistsReducer } from '../features/todolist/todolistsSlice';
+import { TaskPriorities, TaskStatuses } from 'common/enums';
+import { TasksStateType, tasksReducer } from '../features/todolistsList/tasks/tasksSlice';
+import { TodolistEntityType, todolistsReducer, todolistsThunks } from '../features/todolistsList/todolistsSlice';
+import { TestsAction } from '../common/types';
 
 test('ids should be equals', () => {
   const startTasksState: TasksStateType = {};
   const startTodolistsState: Array<TodolistEntityType> = [];
 
-  const action = todolistsActions.addTodolist({
-    todolist: {
-      id: 'sdsds',
-      title: 'new todolist',
-      order: 0,
-      addedDate: new Date(),
+  const action: TestsAction<typeof todolistsThunks.addTodolist.fulfilled> = {
+    type: todolistsThunks.addTodolist.fulfilled.type,
+    payload: {
+      todolist: {
+        id: 'sdsds',
+        title: 'new todolist',
+        order: 0,
+        addedDate: new Date(),
+      },
     },
-  });
+  };
 
   const endTasksState = tasksReducer(startTasksState, action);
   const endTodolistsState = todolistsReducer(startTodolistsState, action);
@@ -106,7 +110,12 @@ test('property with todolistId should be deleted', () => {
     ],
   };
 
-  const action = todolistsActions.removeTodolist({ id: 'todolistId2' });
+  const action: TestsAction<typeof todolistsThunks.removeTodolist.fulfilled> = {
+    type: todolistsThunks.removeTodolist.fulfilled.type,
+    payload: {
+      id: 'todolistId2',
+    },
+  };
 
   const endState = tasksReducer(startState, action);
 

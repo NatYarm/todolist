@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import AddItemForm from '../../components/addItemForm/AddItemForm';
+import { AddItemForm } from 'common/components';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import TextField from '@mui/material/TextField';
@@ -82,12 +82,7 @@ const AddItemFormError = ({ addItem, disabled }: AddItemProps) => {
         disabled={disabled}
       />
 
-      <Button
-        variant="contained"
-        onClick={addTitleHandler}
-        style={styles}
-        color="primary"
-      >
+      <Button variant="contained" onClick={addTitleHandler} style={styles} color="primary">
         <Add />
       </Button>
     </div>
@@ -95,14 +90,8 @@ const AddItemFormError = ({ addItem, disabled }: AddItemProps) => {
 };
 
 export const AddItemFormErrorStory: Story = {
-  render: () => (
-    <AddItemFormError
-      addItem={action('Button clicked with empty input field')}
-    />
-  ),
+  render: () => <AddItemFormError addItem={action('Button clicked with empty input field')} />,
 };
 export const AddItemFormDisabledStory: Story = {
-  render: () => (
-    <AddItemForm addItem={action('Field disabled')} disabled={true} />
-  ),
+  render: () => <AddItemForm addItem={action('Field disabled')} disabled={true} />,
 };

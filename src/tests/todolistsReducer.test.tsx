@@ -1,12 +1,14 @@
-import { TodolistType } from '../api/todolist-api';
-import { RequestStatusType } from '../features/app/appSlice';
+import { TodolistType } from '../features/todolistsList/todolistApi';
+import { RequestStatusType } from '../app/appSlice';
 import {
   todolistsActions,
   FilterValuesType,
   TodolistEntityType,
   todolistsReducer,
-} from '../features/todolist/todolistsSlice';
+  todolistsThunks,
+} from '../features/todolistsList/todolistsSlice';
 import { v1 } from 'uuid';
+import { TestsAction } from '../common/types';
 
 let todolistId1: string;
 let todolistId2: string;
@@ -37,7 +39,13 @@ beforeEach(() => {
 });
 
 test('correct todolist should be removed', () => {
-  const endState = todolistsReducer(startState, todolistsActions.removeTodolist({ id: todolistId1 }));
+  const action: TestsAction<typeof todolistsThunks.removeTodolist.fulfilled> = {
+    type: todolistsThunks.removeTodolist.fulfilled.type,
+    payload: {
+      id: todolistId1,
+    },
+  };
+  const endState = todolistsReducer(startState, action);
 
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe(todolistId2);
@@ -50,8 +58,12 @@ test('correct todolist should be added', () => {
     addedDate: new Date(),
     id: 'sdsfds',
   };
+  const action: TestsAction<typeof todolistsThunks.addTodolist.fulfilled> = {
+    type: todolistsThunks.addTodolist.fulfilled.type,
+    payload: { todolist: newTodolist },
+  };
 
-  const endState = todolistsReducer(startState, todolistsActions.addTodolist({ todolist: newTodolist }));
+  const endState = todolistsReducer(startState, action);
 
   expect(endState.length).toBe(3);
   expect(endState[0].title).toBe(newTodolist.title);
@@ -61,10 +73,10 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
   const newTitle = 'New Title';
 
-  const action = todolistsActions.changeTodolistTitle({
-    id: todolistId2,
-    title: newTitle,
-  });
+  const action: TestsAction<typeof todolistsThunks.changeTodolistTitle.fulfilled> = {
+    type: todolistsThunks.changeTodolistTitle.fulfilled.type,
+    payload: { id: todolistId2, title: newTitle },
+  };
 
   const endState = todolistsReducer(startState, action);
 

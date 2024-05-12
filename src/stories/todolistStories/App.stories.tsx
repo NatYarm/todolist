@@ -1,5 +1,5 @@
-import App from '../../features/app/App';
-import { ReduxStoreProviderDecorator } from '../../store/ReduxStoreProviderDecorator';
+import App from '../../app/App';
+import { ReduxStoreProviderDecorator } from '../../app/store/ReduxStoreProviderDecorator';
 
 import { MemoryRouter } from 'react-router-dom';
 
